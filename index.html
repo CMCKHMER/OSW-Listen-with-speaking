@@ -438,7 +438,12 @@
         function createCard(worksheet, type, index) {
             const card = document.createElement('div');
             card.className = 'worksheet-card';
-            card.onclick = () => selectWorksheet(worksheet, type);
+            card.onclick = (e) => {
+                // Prevent opening when clicking the button (button has its own handler)
+                if (!e.target.classList.contains('open-btn')) {
+                    selectWorksheet(worksheet, type, e);
+                }
+            };
 
             const iconClass = type === 'kwq' ? 'icon-kwq' : 'icon-assessment';
             const icon = type === 'kwq' ? '📖' : '✅';
@@ -453,15 +458,22 @@
                 </div>
                 <div class="card-footer">
                     <span class="unit-badge">${worksheet.unit}</span>
-                    <button class="open-btn">Open Worksheet</button>
+                    <button class="open-btn" onclick="openWorksheet('${worksheet.file}', '${worksheet.title.replace(/'/g, "\\'")}')">Open Worksheet</button>
                 </div>
             `;
 
             return card;
         }
 
+        // Open worksheet PDF
+        function openWorksheet(file, title) {
+            console.log('Opening:', file);
+            // Open the PDF file in a new tab
+            window.open(file, '_blank');
+        }
+
         // Select worksheet
-        function selectWorksheet(worksheet, type) {
+        function selectWorksheet(worksheet, type, event) {
             selectedWorksheet = worksheet;
             
             // Remove active class from all cards
@@ -471,8 +483,10 @@
             });
 
             // Add visual feedback to selected card
-            event.currentTarget.style.border = '3px solid #667eea';
-            event.currentTarget.style.background = '#f8f9ff';
+            if (event && event.currentTarget) {
+                event.currentTarget.style.border = '3px solid #667eea';
+                event.currentTarget.style.background = '#f8f9ff';
+            }
 
             console.log('Selected:', worksheet.title);
         }
