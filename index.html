@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Worksheets Portal</title>
+    <title>Digital Student Worksheets Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -49,12 +50,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        .student-info h2 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
-
         .info-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -87,11 +82,7 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
         }
 
-        /* Worksheet Cards Section */
-        .worksheets-section {
-            margin-bottom: 30px;
-        }
-
+        /* Section Titles */
         .section-title {
             color: white;
             font-size: 1.8rem;
@@ -99,6 +90,7 @@
             text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
         }
 
+        /* Cards Grid */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -192,50 +184,176 @@
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
-        /* Submit Section */
-        .submit-section {
+        /* Worksheet View */
+        .hidden {
+            display: none !important;
+        }
+
+        .worksheet-view {
             background: white;
             border-radius: 15px;
-            padding: 25px;
-            text-align: center;
+            padding: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        .submit-section h2 {
+        .worksheet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .back-btn {
+            background: #f0f0f0;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .worksheet-meta {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .worksheet-content {
+            margin-bottom: 30px;
+        }
+
+        .question-block {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .question-text {
+            font-weight: 600;
             color: #333;
             margin-bottom: 15px;
+            font-size: 1.1rem;
         }
 
-        .submit-section p {
-            color: #666;
-            margin-bottom: 25px;
+        .answer-input {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.3s;
         }
 
-        .submit-btn {
+        .answer-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .multiple-choice {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .choice-label {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .choice-label:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .choice-label input[type="radio"] {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .choice-label.selected {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        /* Action Buttons */
+        .worksheet-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .action-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-btn.secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .action-btn.secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .action-btn.info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .action-btn.info:hover {
+            background: #138496;
+        }
+
+        .action-btn.success {
             background: linear-gradient(135deg, #11998e, #38ef7d);
             color: white;
-            border: none;
-            padding: 15px 50px;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .action-btn.success:hover {
+            transform: scale(1.05);
             box-shadow: 0 5px 20px rgba(17, 153, 142, 0.4);
         }
 
-        .submit-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 30px rgba(17, 153, 142, 0.6);
-        }
-
-        .submit-btn:active {
-            transform: scale(0.98);
-        }
-
-        /* Success Modal */
+        /* Modal */
         .modal {
-            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -243,6 +361,7 @@
             height: 100%;
             background: rgba(0,0,0,0.7);
             z-index: 1000;
+            display: none;
             justify-content: center;
             align-items: center;
         }
@@ -290,10 +409,26 @@
             margin-bottom: 15px;
         }
 
-        .modal-content p {
-            color: #666;
-            margin-bottom: 25px;
-            font-size: 1.1rem;
+        .summary-box {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .summary-box p {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .status-badge {
+            background: #38ef7d;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
         .close-btn {
@@ -325,67 +460,125 @@
             .info-grid {
                 grid-template-columns: 1fr;
             }
+
+            .worksheet-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .worksheet-actions {
+                flex-direction: column;
+            }
+
+            .action-group {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .student-info, .cards-grid, .section-title, .worksheet-actions, .back-btn {
+                display: none !important;
+            }
+
+            .worksheet-view {
+                box-shadow: none;
+                padding: 0;
+            }
+
+            .question-block {
+                break-inside: avoid;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>📚 Digital Worksheets Portal</h1>
-            <p>Select your worksheet, complete it, and submit when finished</p>
+            <h1><i class="fas fa-graduation-cap"></i> Digital Worksheets Portal</h1>
+            <p>Interactive Learning Platform - Complete, Share, Print & Submit</p>
         </header>
 
-        <!-- Student Information Section -->
-        <section class="student-info">
-            <h2>👤 Student Information</h2>
+        <!-- Student Info Section -->
+        <section class="student-info" id="studentInfoSection">
+            <h2><i class="fas fa-user"></i> Student Information</h2>
             <div class="info-grid">
                 <div class="form-group">
                     <label for="studentName">Student Name</label>
-                    <input type="text" id="studentName" placeholder="Enter your full name" required>
+                    <input type="text" id="studentName" placeholder="Enter your full name">
                 </div>
                 <div class="form-group">
                     <label for="studentDate">Date</label>
-                    <input type="date" id="studentDate" required>
+                    <input type="date" id="studentDate">
                 </div>
             </div>
         </section>
 
-        <!-- Knowledge & Wisdom Questions Section -->
-        <section class="worksheets-section">
-            <h2 class="section-title">📝 Knowledge & Wisdom Questions</h2>
-            <div class="cards-grid" id="kwq-cards">
-                <!-- Cards will be generated by JavaScript -->
-            </div>
-        </section>
+        <!-- Card View -->
+        <main id="cardView">
+            <section class="worksheets-section">
+                <h2 class="section-title"><i class="fas fa-book-open"></i> Knowledge & Wisdom Questions</h2>
+                <div class="cards-grid" id="kwq-cards"></div>
+            </section>
 
-        <!-- Assessment Section -->
-        <section class="worksheets-section">
-            <h2 class="section-title">✅ Assessments</h2>
-            <div class="cards-grid" id="assessment-cards">
-                <!-- Cards will be generated by JavaScript -->
-            </div>
-        </section>
+            <section class="worksheets-section">
+                <h2 class="section-title"><i class="fas fa-clipboard-check"></i> Assessments</h2>
+                <div class="cards-grid" id="assessment-cards"></div>
+            </section>
+        </main>
 
-        <!-- Submit Section -->
-        <section class="submit-section">
-            <h2>Ready to Submit?</h2>
-            <p>Make sure you've filled in your information and completed your worksheet</p>
-            <button class="submit-btn" onclick="handleSubmit()">Submit Worksheet</button>
-        </section>
+        <!-- Live Worksheet View -->
+        <main id="worksheetView" class="worksheet-view hidden">
+            <div class="worksheet-header">
+                <button class="back-btn" onclick="showCardView()">
+                    <i class="fas fa-arrow-left"></i> Back to Lessons
+                </button>
+                <div class="worksheet-meta">
+                    <span id="displayStudentName"></span> | <span id="displayDate"></span>
+                </div>
+            </div>
+
+            <div class="worksheet-content" id="worksheetContent">
+                <!-- Dynamic content loads here -->
+            </div>
+
+            <div class="worksheet-actions">
+                <button onclick="viewPDFReference()" class="action-btn info">
+                    <i class="fas fa-file-pdf"></i> View PDF Reference
+                </button>
+                <div class="action-group">
+                    <button onclick="printWorksheet()" class="action-btn secondary">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                    <button onclick="shareWorksheet()" class="action-btn secondary">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                    <button onclick="submitWorksheet()" class="action-btn success">
+                        <i class="fas fa-paper-plane"></i> Submit Work
+                    </button>
+                </div>
+            </div>
+        </main>
     </div>
 
     <!-- Success Modal -->
     <div class="modal" id="successModal">
         <div class="modal-content">
-            <div class="success-icon">✓</div>
+            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
             <h3>Submission Successful!</h3>
-            <p id="submissionDetails"></p>
-            <button class="close-btn" onclick="closeModal()">Close</button>
+            <div class="summary-box" id="submissionSummary"></div>
+            <button class="close-btn" onclick="closeModal()">Done</button>
         </div>
     </div>
 
     <script>
-        // Worksheet data organized by type
+        // Worksheet data with interactive content
         const worksheets = {
             kwq: [
                 { unit: 'Unit 1', file: 'OSW_LS6_KWQ_U1.pdf', title: 'Knowledge & Wisdom Q - Unit 1', description: 'Complete the knowledge and wisdom questions for Unit 1' },
@@ -406,13 +599,13 @@
             ]
         };
 
-        let selectedWorksheet = null;
+        let currentWorksheet = null;
+        let studentAnswers = {};
 
         // Set today's date as default
         document.addEventListener('DOMContentLoaded', function() {
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('studentDate').value = today;
-            
             renderCards();
         });
 
@@ -421,15 +614,13 @@
             const kwqContainer = document.getElementById('kwq-cards');
             const assessmentContainer = document.getElementById('assessment-cards');
 
-            // Render KWQ cards
-            worksheets.kwq.forEach((worksheet, index) => {
-                const card = createCard(worksheet, 'kwq', index);
+            worksheets.kwq.forEach((ws, index) => {
+                const card = createCard(ws, 'kwq', index);
                 kwqContainer.appendChild(card);
             });
 
-            // Render Assessment cards
-            worksheets.assessment.forEach((worksheet, index) => {
-                const card = createCard(worksheet, 'assessment', index);
+            worksheets.assessment.forEach((ws, index) => {
+                const card = createCard(ws, 'assessment', index);
                 assessmentContainer.appendChild(card);
             });
         }
@@ -438,8 +629,7 @@
         function createCard(worksheet, type, index) {
             const card = document.createElement('div');
             card.className = 'worksheet-card';
-            card.onclick = () => selectWorksheet(worksheet, type);
-
+            
             const iconClass = type === 'kwq' ? 'icon-kwq' : 'icon-assessment';
             const icon = type === 'kwq' ? '📖' : '✅';
 
@@ -453,70 +643,198 @@
                 </div>
                 <div class="card-footer">
                     <span class="unit-badge">${worksheet.unit}</span>
-                    <button class="open-btn">Open Worksheet</button>
+                    <button class="open-btn" onclick="event.stopPropagation(); openWorksheet('${type}', ${index})">
+                        <i class="fas fa-pencil-alt"></i> Start Worksheet
+                    </button>
                 </div>
             `;
 
             return card;
         }
 
-        // Select worksheet
-        function selectWorksheet(worksheet, type) {
-            selectedWorksheet = worksheet;
+        // Open interactive worksheet
+        function openWorksheet(type, index) {
+            const worksheet = worksheets[type][index];
+            currentWorksheet = worksheet;
+            studentAnswers = {};
+
+            // Hide card view, show worksheet view
+            document.getElementById('cardView').classList.add('hidden');
+            document.getElementById('studentInfoSection').classList.add('hidden');
+            document.getElementById('worksheetView').classList.remove('hidden');
+
+            // Update header info
+            const name = document.getElementById('studentName').value || 'Student';
+            const date = document.getElementById('studentDate').value || new Date().toISOString().split('T')[0];
+            document.getElementById('displayStudentName').textContent = name;
+            document.getElementById('displayDate').textContent = date;
+
+            // Generate interactive content
+            generateWorksheetContent(worksheet);
             
-            // Remove active class from all cards
-            document.querySelectorAll('.worksheet-card').forEach(card => {
-                card.style.border = 'none';
-                card.style.background = 'white';
-            });
-
-            // Add visual feedback to selected card
-            event.currentTarget.style.border = '3px solid #667eea';
-            event.currentTarget.style.background = '#f8f9ff';
-
-            console.log('Selected:', worksheet.title);
+            window.scrollTo(0, 0);
         }
 
-        // Handle form submission
-        function handleSubmit() {
+        // Generate interactive worksheet content
+        function generateWorksheetContent(worksheet) {
+            const container = document.getElementById('worksheetContent');
+            const unitNum = worksheet.unit.replace('Unit ', '') || '1';
+            
+            let html = `
+                <h2 style="margin-bottom: 25px; color: #333;">${worksheet.title}</h2>
+                <p style="color: #666; margin-bottom: 30px;">Complete all questions below. Your answers will be saved automatically.</p>
+            `;
+
+            // Generate sample questions (in real app, parse from PDF or have predefined questions)
+            for (let i = 1; i <= 5; i++) {
+                html += `
+                    <div class="question-block">
+                        <div class="question-text">Question ${i}: Explain the key concepts learned in ${worksheet.unit}.</div>
+                        <textarea class="answer-input" 
+                                  id="answer${i}" 
+                                  placeholder="Type your answer here..."
+                                  oninput="saveAnswer(${i}, this.value)"></textarea>
+                    </div>
+                `;
+                studentAnswers[i] = '';
+            }
+
+            // Add multiple choice example
+            html += `
+                <div class="question-block">
+                    <div class="question-text">Question 6: Which statement best summarizes ${worksheet.unit}?</div>
+                    <div class="multiple-choice">
+                        <label class="choice-label" onclick="selectChoice(this, 6, 'A')">
+                            <input type="radio" name="q6" value="A">
+                            A) The primary focus is on foundational skills
+                        </label>
+                        <label class="choice-label" onclick="selectChoice(this, 6, 'B')">
+                            <input type="radio" name="q6" value="B">
+                            B) Advanced applications are emphasized
+                        </label>
+                        <label class="choice-label" onclick="selectChoice(this, 6, 'C')">
+                            <input type="radio" name="q6" value="C">
+                            C) Both theory and practice are integrated
+                        </label>
+                        <label class="choice-label" onclick="selectChoice(this, 6, 'D')">
+                            <input type="radio" name="q6" value="D">
+                            D) Independent study is required
+                        </label>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        // Save answer
+        function saveAnswer(questionNum, value) {
+            studentAnswers[questionNum] = value;
+        }
+
+        // Select multiple choice
+        function selectChoice(label, questionNum, value) {
+            // Remove selected from siblings
+            const parent = label.parentElement;
+            parent.querySelectorAll('.choice-label').forEach(l => {
+                l.classList.remove('selected');
+                l.querySelector('input').checked = false;
+            });
+            
+            // Add selected to clicked
+            label.classList.add('selected');
+            label.querySelector('input').checked = true;
+            studentAnswers[questionNum] = value;
+        }
+
+        // Show card view
+        function showCardView() {
+            document.getElementById('worksheetView').classList.add('hidden');
+            document.getElementById('cardView').classList.remove('hidden');
+            document.getElementById('studentInfoSection').classList.remove('hidden');
+            currentWorksheet = null;
+        }
+
+        // View PDF reference
+        function viewPDFReference() {
+            if (currentWorksheet && currentWorksheet.file) {
+                window.open(currentWorksheet.file, '_blank');
+            }
+        }
+
+        // Print worksheet
+        function printWorksheet() {
+            window.print();
+        }
+
+        // Share worksheet
+        async function shareWorksheet() {
+            if (!currentWorksheet) return;
+
+            const shareData = {
+                title: currentWorksheet.title,
+                text: `Check out this worksheet: ${currentWorksheet.title}`,
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                } catch (err) {
+                    console.log('Share canceled');
+                }
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(`${shareData.text} - ${shareData.url}`)
+                    .then(() => alert('Link copied to clipboard!'))
+                    .catch(() => alert('Unable to share. Please copy the URL manually.'));
+            }
+        }
+
+        // Submit worksheet
+        function submitWorksheet() {
             const studentName = document.getElementById('studentName').value.trim();
             const studentDate = document.getElementById('studentDate').value;
 
-            // Validation
             if (!studentName) {
-                alert('Please enter your name');
-                document.getElementById('studentName').focus();
+                alert('Please enter your name first');
+                showCardView();
                 return;
             }
 
             if (!studentDate) {
-                alert('Please select a date');
-                document.getElementById('studentDate').focus();
+                alert('Please select a date first');
+                showCardView();
                 return;
             }
 
-            if (!selectedWorksheet) {
-                alert('Please select a worksheet first');
+            // Check if any answers provided
+            const hasAnswers = Object.values(studentAnswers).some(a => a && a.trim() !== '');
+            if (!hasAnswers) {
+                alert('Please complete at least one question before submitting');
                 return;
             }
 
             // Show success modal
-            const modal = document.getElementById('successModal');
-            const details = document.getElementById('submissionDetails');
-            details.innerHTML = `
-                <strong>Student:</strong> ${studentName}<br>
-                <strong>Date:</strong> ${studentDate}<br>
-                <strong>Worksheet:</strong> ${selectedWorksheet.title}<br>
-                <strong>Unit:</strong> ${selectedWorksheet.unit}
+            const summary = document.getElementById('submissionSummary');
+            summary.innerHTML = `
+                <p><strong>Student:</strong> ${studentName}</p>
+                <p><strong>Date:</strong> ${studentDate}</p>
+                <p><strong>Lesson:</strong> ${currentWorksheet.title}</p>
+                <p><strong>Unit:</strong> ${currentWorksheet.unit}</p>
+                <p><strong>Questions Answered:</strong> ${Object.values(studentAnswers).filter(a => a).length}</p>
+                <p><strong>Status:</strong> <span class="status-badge">Submitted</span></p>
             `;
-            modal.classList.add('active');
+            
+            document.getElementById('successModal').classList.add('active');
 
-            // Log submission (in real app, this would send to server)
+            // Log submission (in real app, send to server)
             console.log('Submission:', {
                 student: studentName,
                 date: studentDate,
-                worksheet: selectedWorksheet.title,
-                unit: selectedWorksheet.unit,
+                worksheet: currentWorksheet.title,
+                unit: currentWorksheet.unit,
+                answers: studentAnswers,
                 timestamp: new Date().toISOString()
             });
         }
@@ -524,12 +842,7 @@
         // Close modal
         function closeModal() {
             document.getElementById('successModal').classList.remove('active');
-            // Reset selection
-            selectedWorksheet = null;
-            document.querySelectorAll('.worksheet-card').forEach(card => {
-                card.style.border = 'none';
-                card.style.background = 'white';
-            });
+            showCardView();
         }
 
         // Close modal when clicking outside
