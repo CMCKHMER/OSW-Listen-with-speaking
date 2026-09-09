@@ -578,35 +578,71 @@
     </div>
 
     <script>
-        // Worksheet data with interactive content
-        const worksheets = {
-            kwq: [
-                { unit: 'Unit 1', file: 'OSW_LS6_KWQ_U1.pdf', title: 'Knowledge & Wisdom Q - Unit 1', description: 'Complete the knowledge and wisdom questions for Unit 1' },
-                { unit: 'Unit 2', file: 'OSW_LS6_KWQ_U2.pdf', title: 'Knowledge & Wisdom Q - Unit 2', description: 'Complete the knowledge and wisdom questions for Unit 2' },
-                { unit: 'Unit 3', file: 'OSW_LS6_KWQ_U3.pdf', title: 'Knowledge & Wisdom Q - Unit 3', description: 'Complete the knowledge and wisdom questions for Unit 3' },
-                { unit: 'Unit 4', file: 'OSW_LS6_KWQ_U4.pdf', title: 'Knowledge & Wisdom Q - Unit 4', description: 'Complete the knowledge and wisdom questions for Unit 4' },
-                { unit: 'Unit 5', file: 'OSW_LS6_KWQ_U5.pdf', title: 'Knowledge & Wisdom Q - Unit 5', description: 'Complete the knowledge and wisdom questions for Unit 5' },
-                { unit: 'Unit 6', file: 'OSW_LS6_KWQ_U6.pdf', title: 'Knowledge & Wisdom Q - Unit 6', description: 'Complete the knowledge and wisdom questions for Unit 6' },
-                { unit: 'Unit 7', file: 'OSW_LS6_KWQ_U7.pdf', title: 'Knowledge & Wisdom Q - Unit 7', description: 'Complete the knowledge and wisdom questions for Unit 7' },
-                { unit: 'Unit 8', file: 'OSW_LS6_KWQ_U8.pdf', title: 'Knowledge & Wisdom Q - Unit 8', description: 'Complete the knowledge and wisdom questions for Unit 8' },
-                { unit: 'Unit 9', file: 'OSW_LS6_KWQ_U9.pdf', title: 'Knowledge & Wisdom Q - Unit 9', description: 'Complete the knowledge and wisdom questions for Unit 9' },
-                { unit: 'Unit 10', file: 'OSW_LS6_KWQ_U10.pdf', title: 'Knowledge & Wisdom Q - Unit 10', description: 'Complete the knowledge and wisdom questions for Unit 10' },
-                { unit: 'Unit 11', file: 'OSW_LS6_KWQ_U11.pdf', title: 'Knowledge & Wisdom Q - Unit 11', description: 'Complete the knowledge and wisdom questions for Unit 11' },
-                { unit: 'Unit 12', file: 'OSW_LS6_KWQ_U12.pdf', title: 'Knowledge & Wisdom Q - Unit 12', description: 'Complete the knowledge and wisdom questions for Unit 12' }
-            ],
-            assessment: [
-                { unit: 'Answer Key', file: 'OSW_LS6_Assessment_AK.pdf', title: 'Level 6 Assessment Answer Key', description: 'Reference answer key for Level 6 assessments' }
-            ]
-        };
-
+        // Worksheet data loaded from parsed JSON
+        let worksheetsData = {};
+        let worksheets = { kwq: [], assessment: [] };
         let currentWorksheet = null;
         let studentAnswers = {};
 
-        // Set today's date as default
+        // Load parsed worksheet data from JSON
+        async function loadWorksheetsData() {
+            try {
+                const response = await fetch('worksheets_final.json');
+                if (!response.ok) throw new Error('Failed to load');
+                worksheetsData = await response.json();
+                
+                // Build worksheets array from parsed data
+                const kwqArray = [];
+                for (let i = 1; i <= 12; i++) {
+                    const key = `Unit_${i}`;
+                    if (worksheetsData[key]) {
+                        const data = worksheetsData[key];
+                        kwqArray.push({
+                            unit: `Unit ${i}`,
+                            file: data.filename,
+                            title: data.title || `Unit ${i} Key Word Quiz`,
+                            description: `Complete the knowledge and wisdom questions for Unit ${i}`,
+                            section_a: data.section_a || [],
+                            section_b: data.section_b || [],
+                            section_c: data.section_c || [],
+                            total_questions: data.total_questions || 0
+                        });
+                    }
+                }
+                worksheets.kwq = kwqArray;
+            } catch (error) {
+                console.log('Using fallback worksheet data');
+                // Fallback to basic structure
+                worksheets.kwq = [
+                    { unit: 'Unit 1', file: 'OSW_LS6_KWQ_U1.pdf', title: 'Knowledge & Wisdom Q - Unit 1', description: 'Complete the knowledge and wisdom questions for Unit 1', section_a: [], section_b: [], section_c: [] },
+                    { unit: 'Unit 2', file: 'OSW_LS6_KWQ_U2.pdf', title: 'Knowledge & Wisdom Q - Unit 2', description: 'Complete the knowledge and wisdom questions for Unit 2', section_a: [], section_b: [], section_c: [] },
+                    { unit: 'Unit 3', file: 'OSW_LS6_KWQ_U3.pdf', title: 'Knowledge & Wisdom Q - Unit 3', description: 'Complete the knowledge and wisdom questions for Unit 3', section_a: [], section_b: [], section_c: [] },
+                    { unit: 'Unit 4', file: 'OSW_LS6_KWQ_U4.pdf', title: 'Knowledge & Wisdom Q - Unit 4', description: 'Complete the knowledge and wisdom questions for Unit 4', section_a: [], section_b: [], section_c: [] },
+                    { unit: 'Unit 5', file: 'OSW_LS6_KWQ_U5.pdf', title: 'Knowledge & Wisdom Q - Unit 5', description: 'Complete the knowledge and wisdom questions for Unit 5', section_a: [], section_b: [], section_c: [] },
+                    { unit: 'Unit 6', file: 'OSW_LS6_KWQ_U6.pdf', title: 'Knowledge & Wisdom Q - Unit 6', description: 'Complete the knowledge and wisdom questions for Unit 6', section_a: [], section_b: [], section_c: [] },
+                    { unit: 'Unit 7', file: 'OSW_LS6_KWQ_U7.pdf', title: 'Knowledge & Wisdom Q - Unit 7', description: 'Complete the knowledge and wisdom questions for Unit 7', section_a: [], section_b: [], section_c: [] },
+                    { unit: 'Unit 8', file: 'OSW_LS6_KWQ_U8.pdf', title: 'Knowledge & Wisdom Q - Unit 8', description: 'Complete the knowledge and wisdom questions for Unit 8', section_a: [], section_b: [], section_c: [] },
+                    { unit: 'Unit 9', file: 'OSW_LS6_KWQ_U9.pdf', title: 'Knowledge & Wisdom Q - Unit 9', description: 'Complete the knowledge and wisdom questions for Unit 9', section_a: [], section_b: [], section_c: [] },
+                    { unit: 'Unit 10', file: 'OSW_LS6_KWQ_U10.pdf', title: 'Knowledge & Wisdom Q - Unit 10', description: 'Complete the knowledge and wisdom questions for Unit 10', section_a: [], section_b: [], section_c: [] },
+                    { unit: 'Unit 11', file: 'OSW_LS6_KWQ_U11.pdf', title: 'Knowledge & Wisdom Q - Unit 11', description: 'Complete the knowledge and wisdom questions for Unit 11', section_a: [], section_b: [], section_c: [] },
+                    { unit: 'Unit 12', file: 'OSW_LS6_KWQ_U12.pdf', title: 'Knowledge & Wisdom Q - Unit 12', description: 'Complete the knowledge and wisdom questions for Unit 12', section_a: [], section_b: [], section_c: [] }
+                ];
+            }
+            
+            // Add assessment
+            worksheets.assessment = [
+                { unit: 'Answer Key', file: 'OSW_LS6_Assessment_AK.pdf', title: 'Level 6 Assessment Answer Key', description: 'Reference answer key for Level 6 assessments' }
+            ];
+            
+            // Render cards
+            renderCards();
+        }
+
+        // Set today's date as default and load data
         document.addEventListener('DOMContentLoaded', function() {
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('studentDate').value = today;
-            renderCards();
+            loadWorksheetsData();
         });
 
         // Render worksheet cards
@@ -727,9 +763,14 @@
             container.innerHTML = html;
         }
 
-        // Save answer
+        // Save answer for text inputs
         function saveAnswer(questionNum, value) {
             studentAnswers[questionNum] = value;
+        }
+
+        // Save answer for blank inputs
+        function saveBlankAnswer(blankNum, value) {
+            studentAnswers[`B${blankNum}`] = value;
         }
 
         // Select multiple choice
