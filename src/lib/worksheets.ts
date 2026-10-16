@@ -985,3 +985,71 @@ export const PROJECT_PAGES: ProjectPage[] = [
     imagePath: "/OSW-Listen-with-speaking/project-pages/topic6.png",
   },
 ];
+
+// ===== Speaking Tutor data =====
+export interface SpeakingTutor {
+  topicId: string;
+  topicNumber: number;
+  title: string;
+  skill: string;
+  speakTask: string;
+  page1Path: string;
+  page2Path: string;
+}
+
+export const SPEAKING_TUTORS: SpeakingTutor[] = [
+  {
+    topicId: "T1",
+    topicNumber: 1,
+    title: "Ask & Give Personal Information",
+    skill: "5 W Questions (Who, What, When, Where, Why)",
+    speakTask: "Ask and give personal information with a partner. Use the 5 W questions and take notes.",
+    page1Path: "/OSW-Listen-with-speaking/speaking-tutor/topic1-page1.png",
+    page2Path: "/OSW-Listen-with-speaking/speaking-tutor/topic1-page2.png",
+  },
+  {
+    topicId: "T2",
+    topicNumber: 2,
+    title: "Give Opinions About Things",
+    skill: "Agreeing & Disagreeing",
+    speakTask: "With a partner, talk about the things in your locker. Are they important or not? Ask for your partner's opinions.",
+    page1Path: "/OSW-Listen-with-speaking/speaking-tutor/topic2-page1.png",
+    page2Path: "/OSW-Listen-with-speaking/speaking-tutor/topic2-page2.png",
+  },
+  {
+    topicId: "T3",
+    topicNumber: 3,
+    title: "Give Preferences About Clothes",
+    skill: "Giving Preferences",
+    speakTask: "Work with a partner. Tell each other about the kinds of clothes you like to wear.",
+    page1Path: "/OSW-Listen-with-speaking/speaking-tutor/topic3-page1.png",
+    page2Path: "/OSW-Listen-with-speaking/speaking-tutor/topic3-page2.png",
+  },
+  {
+    topicId: "T4",
+    topicNumber: 4,
+    title: "Ask For & Give Directions",
+    skill: "Action Words & Directions",
+    speakTask: "Work with a partner. Ask each other about the place you chose. Then ask for and give directions.",
+    page1Path: "/OSW-Listen-with-speaking/speaking-tutor/topic4-page1.png",
+    page2Path: "/OSW-Listen-with-speaking/speaking-tutor/topic4-page2.png",
+  },
+  {
+    topicId: "T5",
+    topicNumber: 5,
+    title: "Describe an Activity",
+    skill: "Description Words",
+    speakTask: "Work with a partner. Ask your partner about his or her activity. Then describe your own activity.",
+    page1Path: "/OSW-Listen-with-speaking/speaking-tutor/topic5-page1.png",
+    page2Path: "/OSW-Listen-with-speaking/speaking-tutor/topic5-page2.png",
+  },
+  {
+    topicId: "T6",
+    topicNumber: 6,
+    title: "Compare Two Rooms",
+    skill: "Making Comparisons",
+    speakTask: "Ask your partner about his or her room. Then tell about your room and compare it to your friend's room.",
+    page1Path: "/OSW-Listen-with-speaking/speaking-tutor/topic6-page1.png",
+    page2Path: "/OSW-Listen-with-speaking/speaking-tutor/topic6-page2.png",
+  },
+];
