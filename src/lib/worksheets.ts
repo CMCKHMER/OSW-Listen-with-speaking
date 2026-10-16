@@ -855,3 +855,133 @@ export function getTopic(id: string): Topic | undefined {
 export function getCheckStatements(topicId: string, questionId: string): CheckStatement[] {
   return CHECK_STATEMENTS[`${topicId}-${questionId}`] ?? [];
 }
+
+// ===== Project Pages data =====
+export interface ProjectPage {
+  topicId: string;
+  topicNumber: number;
+  title: string;
+  question: string;
+  projectName: string;
+  instructions: string[];
+  projectNotes: string[];
+  materials: string[];
+  imagePath: string;
+}
+
+export const PROJECT_PAGES: ProjectPage[] = [
+  {
+    topicId: "T1",
+    topicNumber: 1,
+    title: "Angelo and the Musician",
+    question: "Do you know anyone who does the job you want to do? Who?",
+    projectName: "What Do You Want to Be?",
+    instructions: [
+      "Do an interview. Ask a partner about what job they want. Use the 5 Ws.",
+      "Take notes.",
+      "Draw a picture of your partner doing the job.",
+    ],
+    projectNotes: [
+      "My partner is ___",
+      "The job my partner wants to do is ___",
+      "The job is important because ___",
+    ],
+    materials: ["paper", "markers", "pencil", "crayons"],
+    imagePath: "/OSW-Listen-with-speaking/project-pages/topic1.png",
+  },
+  {
+    topicId: "T2",
+    topicNumber: 2,
+    title: "Showing Your Colors",
+    question: "What things do you sometimes have in your backpack? What things do you always have in your backpack?",
+    projectName: "Tour of My Backpack",
+    instructions: [
+      "Make a poster. What do you have in your backpack? Make a list.",
+      "Draw your backpack. Then draw and label the things in it.",
+      "Color your poster. Then put it on the wall.",
+    ],
+    projectNotes: [
+      "My backpack is ___",
+      "In my backpack, I have ___",
+      "My favorite thing in my backpack is ___",
+    ],
+    materials: ["poster paper", "markers", "crayons"],
+    imagePath: "/OSW-Listen-with-speaking/project-pages/topic2.png",
+  },
+  {
+    topicId: "T3",
+    topicNumber: 3,
+    title: "How Big Is That Book?",
+    question: "What kinds of clothes do you prefer?",
+    projectName: "Your Style",
+    instructions: [
+      "Make an advertisement. Pretend you own a clothing store. Write a title for your advertisement.",
+      "Draw the things your store sells.",
+      "Write about the things.",
+    ],
+    projectNotes: [
+      "My store sells ___",
+      "People like these things because ___",
+      "People shop at my store because ___",
+    ],
+    materials: ["paper", "markers", "pencil"],
+    imagePath: "/OSW-Listen-with-speaking/project-pages/topic3.png",
+  },
+  {
+    topicId: "T4",
+    topicNumber: 4,
+    title: "A Visit to the Museum",
+    question: "What other places do you go to? How do you get there?",
+    projectName: "Something to Do",
+    instructions: [
+      "Make a postcard. Make a list of places you like to go to in your town.",
+      "Draw and color one of the places.",
+      "Write to a friend. Give details about the place.",
+    ],
+    projectNotes: [
+      "I like to go to ___",
+      "I like it because ___",
+      "To get there, you have to ___",
+    ],
+    materials: ["blank postcard or notecard", "paper", "markers", "crayons"],
+    imagePath: "/OSW-Listen-with-speaking/project-pages/topic4.png",
+  },
+  {
+    topicId: "T5",
+    topicNumber: 5,
+    title: "A National Treasure",
+    question: "What activities do you want to do? Why?",
+    projectName: "Activity Flyer",
+    instructions: [
+      "Make a flyer. Write a hard or interesting activity you do.",
+      "Draw and color the activity.",
+      "Write about the activity. Use description words.",
+    ],
+    projectNotes: [
+      "My favorite activity is ___",
+      "I like the activity because ___",
+      "The activity is ___ because ___",
+    ],
+    materials: ["paper", "pencil", "crayons"],
+    imagePath: "/OSW-Listen-with-speaking/project-pages/topic5.png",
+  },
+  {
+    topicId: "T6",
+    topicNumber: 6,
+    title: "Fill It With Water",
+    question: "What things do you have in your house? Did people have those things 100 years before now?",
+    projectName: "My Dream House",
+    instructions: [
+      "Make a map. Think about a house you want to live in. Draw the shape of the house.",
+      "Draw the rooms. Then draw the things in the rooms.",
+      "Write the names of the rooms.",
+    ],
+    projectNotes: [
+      "My dream house has ___ rooms.",
+      "In these rooms, there are ___",
+      "My favorite room is ___",
+    ],
+    materials: ["paper", "pencil", "ruler", "markers"],
+    imagePath: "/OSW-Listen-with-speaking/project-pages/topic6.png",
+  },
+];

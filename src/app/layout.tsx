@@ -47,6 +47,33 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
+        {/* Back to CMC floating button — visible on all pages */}
+        <a
+          href="https://cmckhmer.github.io/Creative-Minds-/"
+          style={{
+            position: "fixed",
+            top: "16px",
+            right: "16px",
+            zIndex: 99995,
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            padding: "10px 18px",
+            borderRadius: "10px",
+            background: "rgba(15,23,42,0.9)",
+            backdropFilter: "blur(8px)",
+            border: "1px solid rgba(34,211,238,0.3)",
+            color: "#67e8f9",
+            fontFamily: "system-ui, sans-serif",
+            fontSize: "13px",
+            fontWeight: 600,
+            textDecoration: "none",
+            transition: "all 0.2s ease",
+            boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+          }}
+        >
+          ← Back to CMC
+        </a>
         {children}
         <Toaster richColors position="top-center" />
       </body>
